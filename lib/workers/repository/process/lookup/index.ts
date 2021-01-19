@@ -33,6 +33,7 @@ export interface UpdateResult {
   skipReason: SkipReason;
   releases: Release[];
   fixedVersion?: string;
+  notes?: string;
   updates: LookupUpdate[];
   warnings: ValidationMessage[];
 }
@@ -185,6 +186,8 @@ export async function lookupUpdates(
     res.homepage = dependency.homepage;
     res.changelogUrl = dependency.changelogUrl;
     res.dependencyUrl = dependency?.dependencyUrl;
+    res.notes = dependency.notes;
+
     // TODO: improve this
     // istanbul ignore if
     if (dependency.dockerRegistry) {

@@ -48,6 +48,7 @@ export interface Release {
   releaseTimestamp?: any;
   version: string;
   newDigest?: string;
+  message?: string;
 }
 
 export interface ReleaseResult {
@@ -56,6 +57,7 @@ export interface ReleaseResult {
   changelogUrl?: string;
   dependencyUrl?: string;
   deprecationMessage?: string;
+  notes?: string;
   display?: string;
   dockerRegistry?: string;
   dockerRepository?: string;

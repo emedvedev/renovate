@@ -1,5 +1,5 @@
+import * as datasourceGitSubdirCommits from '../../datasource/git-subdir-commits';
 import * as datasourceGitTags from '../../datasource/git-tags';
-import * as datasourceGithubTags from '../../datasource/github-tags';
 import * as datasourceTerragruntModule from '../../datasource/terraform-module';
 import { logger } from '../../logger';
 import { SkipReason } from '../../types';
@@ -7,7 +7,7 @@ import { PackageDependency } from '../common';
 import { extractTerragruntProvider } from './providers';
 import { ExtractionResult, TerragruntDependencyTypes } from './util';
 
-const githubRefMatchRegex = /github.com([/:])(?<project>[^/]+\/[a-z0-9-.]+).*\?ref=(?<tag>.*)$/;
+const githubRefMatchRegex = /github.com([/:])(?<project>[^/]+\/[a-z0-9-.]+.*)\?ref=(?<tag>.*)$/;
 const gitTagsRefMatchRegex = /(?:git::)?(?<url>(?:http|https|ssh):\/\/(?:.*@)?(?<path>.*.*\/(?<project>.*\/.*)))\?ref=(?<tag>.*)$/;
 const hostnameMatchRegex = /^(?<hostname>([\w|\d]+\.)+[\w|\d]+)/;
 
@@ -32,10 +32,10 @@ export function analyseTerragruntModule(dep: PackageDependency): void {
   if (githubRefMatch) {
     const depNameShort = githubRefMatch.groups.project.replace(/\.git$/, '');
     dep.depType = 'github';
-    dep.depName = 'github.com/' + depNameShort;
+    dep.depName = depNameShort;
     dep.depNameShort = depNameShort;
     dep.currentValue = githubRefMatch.groups.tag;
-    dep.datasource = datasourceGithubTags.id;
+    dep.datasource = datasourceGitSubdirCommits.id;
     dep.lookupName = depNameShort;
   } else if (gitTagsRefMatch) {
     dep.depType = 'gitTags';
