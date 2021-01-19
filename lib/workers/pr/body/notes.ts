@@ -46,3 +46,10 @@ export function getPrExtraNotes(config: BranchConfig): string {
 
   return res;
 }
+
+export function getPrCommitNotes(config: BranchConfig): string {
+  if (config.notes) {
+    return `**New pinned commit** (${config.newDigestShort}): ${config.notes}\n\n`;
+  }
+  return '';
+}

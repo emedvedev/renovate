@@ -7,7 +7,7 @@ import { getPrConfigDescription } from './config-description';
 import { getControls } from './controls';
 import { getPrFooter } from './footer';
 import { getPrHeader } from './header';
-import { getPrExtraNotes, getPrNotes } from './notes';
+import { getPrCommitNotes, getPrExtraNotes, getPrNotes } from './notes';
 import { getPrUpdatesTable } from './updates-table';
 
 function massageUpdateMetadata(config: BranchConfig): void {
@@ -75,7 +75,8 @@ export async function getPrBody(config: BranchConfig): Promise<string> {
   const content = {
     header: getPrHeader(config),
     table: getPrUpdatesTable(config),
-    notes: getPrNotes(config) + getPrExtraNotes(config),
+    notes:
+      getPrNotes(config) + getPrExtraNotes(config) + getPrCommitNotes(config),
     changelogs: getChangelogs(config),
     configDescription: await getPrConfigDescription(config),
     controls: getControls(),

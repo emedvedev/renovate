@@ -158,7 +158,7 @@ export function addMetaData(
       let massagedUrl;
       if (parsedUrl.hostname.includes('gitlab')) {
         massagedUrl = massageGitlabUrl(dep.sourceUrl);
-      } else {
+      } else if (!dep.sourceUrl.includes('/tree/')) {
         massagedUrl = massageGithubUrl(dep.sourceUrl);
       }
       // try massaging it
