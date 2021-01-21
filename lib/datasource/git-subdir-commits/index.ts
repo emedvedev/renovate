@@ -51,6 +51,7 @@ export async function getCommits(
       gitRef: commit.hash,
       newDigest: commit.hash,
       releaseTimestamp: commit.date,
+      message: commit.message,
       changelogUrl: `https://github.com/${lookupName}/commit/${commit.hash}`,
     }));
   } finally {
