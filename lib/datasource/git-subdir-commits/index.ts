@@ -74,15 +74,15 @@ export async function getReleases({
   lookupName,
 }: GetReleasesConfig): Promise<ReleaseResult | null> {
   const [repo, subdir] = lookupName.replace('.git', '').split('//');
-  const commits: Release[] = await getCommits({ lookupName: repo }, subdir);
+  const [head]: Release[] = await getCommits({ lookupName: repo }, subdir);
 
   const sourceUrl = `https://github.com/${repo}/tree/master/${subdir}`;
 
   const result: ReleaseResult = {
     sourceUrl,
-    notes: `[${commits[0].message}](https://github.com/${repo}/commit/${commits[0].version})`,
-    latestVersion: commits[0].version,
-    releases: commits.slice(0, 1),
+    notes: `[${head.message}](https://github.com/${repo}/commit/${head.version})`,
+    latestVersion: head.version,
+    releases: [head],
   };
 
   return result;
